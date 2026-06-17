@@ -5,17 +5,23 @@
 :root {
   --background: oklch(0.141 0.005 285.823);
   --foreground: oklch(0.9 0.05 85.9);
+  --muted: oklch(0.451 0.009 91.556);
+  --line: oklch(0.928 0.006 264.531);
+  --cream: oklch(0.883 0.058 85.634);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-line: var(--line);
+  --color-cream: var(--cream);
   --font-decorative: "Cinzel Decorative", "sans-serif";
 }
 
 @layer base {
   * {
-    @apply border-gray-200 dark:border-gray-800;
+    @apply border-line dark:border-gray-800;
   }
   body {
     @apply bg-linear-to-br from-gray-950 via-stone-900 to-amber-950;

@@ -1,4 +1,4 @@
-import { useRouter, useRouterState } from "@tanstack/react-router";
+import { Link, useRouter, useRouterState } from "@tanstack/react-router";
 import { ArrowLeft, Shield } from "lucide-react";
 import { useAppStore } from "@lib/hooks/useAppStore";
 
@@ -20,12 +20,9 @@ export const Toolbar = () => {
       <div className="flex flex-1 items-center">
         <div className="mr-4 flex w-8 items-center justify-center">
           {!isRootRoute && (
-            <button
-              onClick={() => router.history.back()}
-              className="text-amber-200 hover:text-amber-100"
-            >
+            <Link to="/" className="text-amber-200 hover:text-amber-100" aria-label="Back to characters">
               <ArrowLeft size={20} />
-            </button>
+            </Link>
           )}
         </div>
         <h1 className="text-xl font-medium text-amber-200">The Harry Potter App</h1>

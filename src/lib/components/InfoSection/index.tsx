@@ -12,10 +12,10 @@ export const InfoSection = ({
   children: React.ReactNode;
 }) => (
   <div>
-    <h3 className="mb-3 flex items-center gap-2 text-lg font-semibold">
+    <h2 className="mb-[18px] flex items-center gap-[10px] text-[22px] leading-[1.3] font-bold">
       {icon}
       {title}
-    </h3>
+    </h2>
     {children}
   </div>
 );
