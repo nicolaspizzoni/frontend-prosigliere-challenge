@@ -16,7 +16,6 @@ export const CharacterDetailView = ({ character }: CharacterDetailViewProps) => 
   const alternateNamesList =
     character.alternate_names?.map((name) => name.trim()).filter(Boolean) ?? [];
   const hasAlternateNames = alternateNamesList.length > 0;
-  console.log("character", character);
   const hasAlternateActors = character.alternate_actors && character.alternate_actors.length > 0;
 
   return (
