@@ -1,9 +1,13 @@
 import { Spinner } from "@lib/components/Spinner";
 import { CharacterCard } from "./CharacterCard";
 import { useCharacters } from "../-hooks/useCharacters";
+import { CharacterFilterType } from "@lib/constants/filters";
+import { filterCharactersByTab } from "../-utils/filterCharacters";
 
-export const CharactersGrid = () => {
+export const CharactersGrid = ({ filter = "all" }: { filter: CharacterFilterType }) => {
   const { characters, isLoading, isError } = useCharacters();
+
+  const filteredCharacters = filterCharactersByTab(characters, filter);
 
   if (isLoading) {
     return (
@@ -33,7 +37,7 @@ export const CharactersGrid = () => {
 
   return (
     <div className="container mx-auto grid w-min grid-cols-[repeat(auto-fill,minmax(200px,max-content))] gap-4">
-      {characters.map((character) => (
+      {filteredCharacters.map((character) => (
         <CharacterCard
           key={character.id}
           character={character}
