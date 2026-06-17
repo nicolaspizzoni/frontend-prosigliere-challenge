@@ -1,6 +1,6 @@
-export const Item = ({ label, value }: { label: string; value: React.ReactNode }) => (
+export const Item = ({ label, value }: { label?: string; value: React.ReactNode }) => (
   <div>
-    <p className="text-sm text-amber-50/30">{label}</p>
-    <p className="font-light tracking-wide">{value}</p>
+    {label ? <p className="mb-2 text-base leading-[1.3] text-amber-50/30">{label}</p> : null}
+    <p className="text-cream leading-[1.3] font-normal">{value}</p>
   </div>
 );
