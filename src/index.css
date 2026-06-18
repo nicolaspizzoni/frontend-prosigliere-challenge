@@ -8,6 +8,9 @@
   --muted: oklch(0.451 0.009 91.556);
   --line: oklch(0.928 0.006 264.531);
   --cream: oklch(0.883 0.058 85.634);
+  --gold: oklch(0.873 0.179 92.226);
+  --gold-light: oklch(0.911 0.151 96.331);
+  --gold-muted: oklch(0.684 0.036 97.882);
 }
 
 @theme inline {
@@ -16,6 +19,9 @@
   --color-muted: var(--muted);
   --color-line: var(--line);
   --color-cream: var(--cream);
+  --color-gold: var(--gold);
+  --color-gold-light: var(--gold-light);
+  --color-gold-muted: var(--gold-muted);
   --font-decorative: "Cinzel Decorative", "sans-serif";
 }
 

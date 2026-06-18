@@ -14,7 +14,6 @@ export const TabBar = ({ value, onChange }: TabBarProps) => {
           key={tab.id}
           active={value === tab.id}
           onClick={() => onChange(tab.id)}
-          disabled={tab.disabled}
           role="tab"
           aria-selected={value === tab.id}
           className="px-4 font-mono"

@@ -6,7 +6,6 @@ export type CharacterFilterType = (typeof characterFilters)[number];
 export const characterTabs: {
   id: CharacterFilterType;
   label: string;
-  disabled?: boolean;
 }[] = [
   {
     id: "all",
@@ -23,6 +22,5 @@ export const characterTabs: {
   {
     id: "favorite",
     label: "Favorite",
-    disabled: true,
   },
 ];

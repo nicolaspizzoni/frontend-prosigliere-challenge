@@ -2,12 +2,21 @@ import { Spinner } from "@lib/components/Spinner";
 import { CharacterCard } from "./CharacterCard";
 import { useCharacters } from "../-hooks/useCharacters";
 import { CharacterFilterType } from "@lib/constants/filters";
+import { useAppStore } from "@lib/hooks/useAppStore";
 import { filterCharactersByTab } from "../-utils/filterCharacters";
+
+const EMPTY_FILTER_MESSAGES: Record<CharacterFilterType, string> = {
+  all: "No characters found.",
+  students: "No students found.",
+  staff: "No staff found.",
+  favorite: "No favorite characters yet",
+};
 
 export const CharactersGrid = ({ filter = "all" }: { filter: CharacterFilterType }) => {
   const { characters, isLoading, isError } = useCharacters();
+  const favoriteCharacterIds = useAppStore((state) => state.favoriteCharacterIds);
 
-  const filteredCharacters = filterCharactersByTab(characters, filter);
+  const filteredCharacters = filterCharactersByTab(characters, filter, favoriteCharacterIds);
 
   if (isLoading) {
     return (
@@ -31,6 +40,14 @@ export const CharactersGrid = ({ filter = "all" }: { filter: CharacterFilterType
       <div className="flex flex-col items-center gap-2 py-20 text-center">
         <p className="text-lg text-amber-200/60">No characters found.</p>
         <p className="text-sm text-amber-200/30">Try adjusting your filters or search query.</p>
+      </div>
+    );
+  }
+
+  if (filteredCharacters.length === 0) {
+    return (
+      <div className="flex flex-col items-center gap-2 py-20 text-center">
+        <p className="text-lg text-amber-200/60">{EMPTY_FILTER_MESSAGES[filter]}</p>
       </div>
     );
   }
