@@ -58,7 +58,7 @@ export const CharactersGrid = ({ filter = "all" }: { filter: CharacterFilterType
         <CharacterCard
           key={character.id}
           character={character}
-          className="transition-transform duration-300 hover:scale-105 hover:shadow-xl"
+          wrapperClassName="transition-transform duration-300 hover:scale-105 hover:shadow-xl"
         />
       ))}
     </div>

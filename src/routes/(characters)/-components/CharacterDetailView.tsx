@@ -1,4 +1,4 @@
-import { BookOpen, School, Sparkles, Star, User } from "lucide-react";
+import { BookOpen, School, Sparkles, User } from "lucide-react";
 import { InfoSection } from "@lib/components/InfoSection";
 import { Character } from "@lib/constants/characters";
 import {
@@ -7,6 +7,7 @@ import {
   formatBoolean,
   formatText,
 } from "../-utils/formatCharacter";
+import { CharacterCard } from "./CharacterCard";
 
 type CharacterDetailViewProps = {
   character: Character;
@@ -28,29 +29,13 @@ export const CharacterDetailView = ({ character }: CharacterDetailViewProps) => 
         className="mx-auto flex max-w-[824px] flex-col gap-8 lg:flex-row lg:items-start lg:gap-4"
       >
         <aside aria-label="Character identity" className="mx-auto shrink-0 lg:mx-0">
-          <figure className="relative h-[369px] w-[262px] overflow-hidden rounded-2xl shadow-md shadow-zinc-950">
-            {character.image ? (
-              <img src={character.image} alt="" className="h-full w-full object-cover" />
-            ) : (
-              <div
-                className="flex h-full w-full items-center justify-center bg-stone-900/60 text-amber-200/50"
-                role="img"
-                aria-label="No character image available"
-              >
-                No image
-              </div>
-            )}
-            <div
-              aria-hidden
-              className="absolute inset-0 bg-linear-to-t from-gray-950/80 via-transparent to-transparent"
-            />
-            <Star aria-hidden className="text-foreground/80 absolute top-3 right-3 z-10 size-5" />
-            <figcaption className="absolute bottom-4 left-4 z-10">
-              <h1 id="character-name" className="text-cream text-lg font-normal uppercase">
-                {formatText(character.name)}
-              </h1>
-            </figcaption>
-          </figure>
+          <CharacterCard
+            character={character}
+            linkToDetail={false}
+            titleAs="h1"
+            titleId="character-name"
+            className="h-[369px] w-[262px]"
+          />
 
           {hasAlternateNames ? (
             <dl className="mt-[14px] max-w-[262px]">
