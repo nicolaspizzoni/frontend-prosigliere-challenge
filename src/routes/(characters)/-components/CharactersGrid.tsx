@@ -52,8 +52,9 @@ export const CharactersGrid = ({ filter = "all" }: { filter: CharacterFilterType
     );
   }
 
+  // mb-7 to match the design mockup
   return (
-    <div className="container mx-auto grid w-min grid-cols-[repeat(auto-fill,minmax(200px,max-content))] gap-4">
+    <div className="container mx-auto mb-7 grid w-min grid-cols-[repeat(auto-fill,minmax(200px,max-content))] gap-4">
       {filteredCharacters.map((character) => (
         <CharacterCard
           key={character.id}

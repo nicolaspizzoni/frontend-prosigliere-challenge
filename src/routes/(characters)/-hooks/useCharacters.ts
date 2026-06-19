@@ -6,7 +6,8 @@ import { Character } from "@lib/constants/characters";
 export const useCharacters = () => {
   const { preferredHouse } = useAppStore();
   const { data, ...rest } = useQuery<Character[]>({
-    queryKey: ["characters"],
+    // Add preferredHouse so cache is keyed by house, same queryKey would reuse stale data after switching houses
+    queryKey: ["characters", preferredHouse],
     queryFn: () => fetchCharacters(preferredHouse),
     staleTime: Infinity,
   });
