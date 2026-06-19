@@ -2,6 +2,28 @@ import { mockCharacters } from "../../../test/mocks";
 import { filterCharactersByTab } from "./filterCharacters";
 
 describe("filterCharactersByTab", () => {
+  describe("all", () => {
+    it("returns the full list unchanged", () => {
+      expect(filterCharactersByTab(mockCharacters, "all", [])).toEqual(mockCharacters);
+    });
+  });
+
+  describe("students", () => {
+    it("returns only characters with hogwartsStudent: true", () => {
+      const result = filterCharactersByTab(mockCharacters, "students", []);
+
+      expect(result.map((character) => character.id)).toEqual(["1", "2"]);
+    });
+  });
+
+  describe("staff", () => {
+    it("returns only characters with hogwartsStaff: true", () => {
+      const result = filterCharactersByTab(mockCharacters, "staff", []);
+
+      expect(result.map((character) => character.id)).toEqual(["3"]);
+    });
+  });
+
   describe("favorite", () => {
     it("returns only characters whose ids are in favoriteCharacterIds", () => {
       const result = filterCharactersByTab(mockCharacters, "favorite", ["1", "3"]);
