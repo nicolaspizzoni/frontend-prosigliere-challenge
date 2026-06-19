@@ -1,10 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
-import { HouseType } from "@lib/constants/houses";
 
 interface AppState {
-  preferredHouse: HouseType | null | undefined;
-  setPreferredHouse: (house: HouseType | null | undefined) => void;
   favoriteCharacterIds: string[];
   toggleFavorite: (characterId: string) => void;
   isFavorite: (characterId: string) => boolean;
@@ -13,8 +10,7 @@ interface AppState {
 export const useAppStore = create<AppState>()(
   persist(
     (set, get) => ({
-      preferredHouse: undefined,
-      setPreferredHouse: (preferredHouse) => set(() => ({ preferredHouse })),
+      // House selection lives in the URL; only persist favorites
       favoriteCharacterIds: [],
       toggleFavorite: (characterId) =>
         set((state) => {
@@ -29,6 +25,10 @@ export const useAppStore = create<AppState>()(
     }),
     {
       name: "the-harry-potter-app-storage",
+      // Persist only serializable state; actions are omitted
+      partialize: (state) => ({
+        favoriteCharacterIds: state.favoriteCharacterIds,
+      }),
     }
   )
 );

@@ -9,69 +9,119 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
-import { Route as charactersIndexRouteImport } from './routes/(characters)/index'
-import { Route as charactersCharacterCharacterIdRouteImport } from './routes/(characters)/character/$characterId'
+import { Route as HouseRouteRouteImport } from './routes/$house/route'
+import { Route as IndexRouteImport } from './routes/index'
+import { Route as HouseIndexRouteImport } from './routes/$house/index'
+import { Route as HouseCharacterCharacterIdRouteImport } from './routes/$house/character/$characterId'
 
-const charactersIndexRoute = charactersIndexRouteImport.update({
-  id: '/(characters)/',
+const HouseRouteRoute = HouseRouteRouteImport.update({
+  id: '/$house',
+  path: '/$house',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const IndexRoute = IndexRouteImport.update({
+  id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const charactersCharacterCharacterIdRoute =
-  charactersCharacterCharacterIdRouteImport.update({
-    id: '/(characters)/character/$characterId',
+const HouseIndexRoute = HouseIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => HouseRouteRoute,
+} as any)
+const HouseCharacterCharacterIdRoute =
+  HouseCharacterCharacterIdRouteImport.update({
+    id: '/character/$characterId',
     path: '/character/$characterId',
-    getParentRoute: () => rootRouteImport,
+    getParentRoute: () => HouseRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
-  '/': typeof charactersIndexRoute
-  '/character/$characterId': typeof charactersCharacterCharacterIdRoute
+  '/': typeof IndexRoute
+  '/$house': typeof HouseRouteRouteWithChildren
+  '/$house/': typeof HouseIndexRoute
+  '/$house/character/$characterId': typeof HouseCharacterCharacterIdRoute
 }
 export interface FileRoutesByTo {
-  '/': typeof charactersIndexRoute
-  '/character/$characterId': typeof charactersCharacterCharacterIdRoute
+  '/': typeof IndexRoute
+  '/$house': typeof HouseIndexRoute
+  '/$house/character/$characterId': typeof HouseCharacterCharacterIdRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
-  '/(characters)/': typeof charactersIndexRoute
-  '/(characters)/character/$characterId': typeof charactersCharacterCharacterIdRoute
+  '/': typeof IndexRoute
+  '/$house': typeof HouseRouteRouteWithChildren
+  '/$house/': typeof HouseIndexRoute
+  '/$house/character/$characterId': typeof HouseCharacterCharacterIdRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/character/$characterId'
+  fullPaths: '/' | '/$house' | '/$house/' | '/$house/character/$characterId'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/character/$characterId'
-  id: '__root__' | '/(characters)/' | '/(characters)/character/$characterId'
+  to: '/' | '/$house' | '/$house/character/$characterId'
+  id:
+    | '__root__'
+    | '/'
+    | '/$house'
+    | '/$house/'
+    | '/$house/character/$characterId'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-  charactersIndexRoute: typeof charactersIndexRoute
-  charactersCharacterCharacterIdRoute: typeof charactersCharacterCharacterIdRoute
+  IndexRoute: typeof IndexRoute
+  HouseRouteRoute: typeof HouseRouteRouteWithChildren
 }
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/(characters)/': {
-      id: '/(characters)/'
-      path: '/'
-      fullPath: '/'
-      preLoaderRoute: typeof charactersIndexRouteImport
+    '/$house': {
+      id: '/$house'
+      path: '/$house'
+      fullPath: '/$house'
+      preLoaderRoute: typeof HouseRouteRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/(characters)/character/$characterId': {
-      id: '/(characters)/character/$characterId'
-      path: '/character/$characterId'
-      fullPath: '/character/$characterId'
-      preLoaderRoute: typeof charactersCharacterCharacterIdRouteImport
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/$house/': {
+      id: '/$house/'
+      path: '/'
+      fullPath: '/$house/'
+      preLoaderRoute: typeof HouseIndexRouteImport
+      parentRoute: typeof HouseRouteRoute
+    }
+    '/$house/character/$characterId': {
+      id: '/$house/character/$characterId'
+      path: '/character/$characterId'
+      fullPath: '/$house/character/$characterId'
+      preLoaderRoute: typeof HouseCharacterCharacterIdRouteImport
+      parentRoute: typeof HouseRouteRoute
     }
   }
 }
 
+interface HouseRouteRouteChildren {
+  HouseIndexRoute: typeof HouseIndexRoute
+  HouseCharacterCharacterIdRoute: typeof HouseCharacterCharacterIdRoute
+}
+
+const HouseRouteRouteChildren: HouseRouteRouteChildren = {
+  HouseIndexRoute: HouseIndexRoute,
+  HouseCharacterCharacterIdRoute: HouseCharacterCharacterIdRoute,
+}
+
+const HouseRouteRouteWithChildren = HouseRouteRoute._addFileChildren(
+  HouseRouteRouteChildren,
+)
+
 const rootRouteChildren: RootRouteChildren = {
-  charactersIndexRoute: charactersIndexRoute,
-  charactersCharacterCharacterIdRoute: charactersCharacterCharacterIdRoute,
+  IndexRoute: IndexRoute,
+  HouseRouteRoute: HouseRouteRouteWithChildren,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

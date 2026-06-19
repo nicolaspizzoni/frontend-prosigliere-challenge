@@ -1,27 +1,40 @@
 import { cn } from "@lib/utils";
 import { Character } from "@lib/constants/characters";
+import { HouseSlug } from "@lib/constants/houses";
 import { Link } from "@tanstack/react-router";
 import { FavoriteToggle } from "./FavoriteToggle";
 
-type CharacterCardProps = {
+type CharacterCardBaseProps = {
   character: Character;
   className?: string;
   /** Outer wrapper (hover scale, transition). */
   wrapperClassName?: string;
-  /** When false, renders static card (no navigation). */
-  linkToDetail?: boolean;
   titleAs?: "h3" | "h2" | "h1";
   titleId?: string;
 };
 
-export const CharacterCard = ({
-  character,
-  className,
-  wrapperClassName,
-  linkToDetail = true,
-  titleAs = "h3",
-  titleId,
-}: CharacterCardProps) => {
+type CharacterCardLinkedProps = CharacterCardBaseProps & {
+  /** When true (default), wraps the card in a link to the detail page. */
+  linkToDetail?: true;
+  houseSlug: HouseSlug;
+};
+
+type CharacterCardStaticProps = CharacterCardBaseProps & {
+  /** When false, renders static card (no navigation). */
+  linkToDetail: false;
+};
+
+type CharacterCardProps = CharacterCardLinkedProps | CharacterCardStaticProps;
+
+export const CharacterCard = (props: CharacterCardProps) => {
+  const {
+    character,
+    className,
+    wrapperClassName,
+    titleAs = "h3",
+    titleId,
+    linkToDetail = true,
+  } = props;
   const Title = titleAs;
 
   const cardContent = (
@@ -48,8 +61,13 @@ export const CharacterCard = ({
 
   return (
     <div className={cn("relative", wrapperClassName)}>
-      {linkToDetail ? (
-        <Link to="/character/$characterId" params={{ characterId: character.id }}>
+      {props.linkToDetail !== false ? (
+        <Link
+          to="/$house/character/$characterId"
+          params={{ house: props.houseSlug, characterId: character.id }}
+          // Preserve the current filter in the URL
+          search={true}
+        >
           {cardContent}
         </Link>
       ) : (

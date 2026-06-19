@@ -4,6 +4,7 @@ import { useCharacters } from "../-hooks/useCharacters";
 import { CharacterFilterType } from "@lib/constants/filters";
 import { useAppStore } from "@lib/hooks/useAppStore";
 import { filterCharactersByTab } from "../-utils/filterCharacters";
+import { HouseSlug, HouseType } from "@lib/constants/houses";
 
 const EMPTY_FILTER_MESSAGES: Record<CharacterFilterType, string> = {
   all: "No characters found.",
@@ -12,8 +13,17 @@ const EMPTY_FILTER_MESSAGES: Record<CharacterFilterType, string> = {
   favorite: "No favorite characters yet",
 };
 
-export const CharactersGrid = ({ filter = "all" }: { filter: CharacterFilterType }) => {
-  const { characters, isLoading, isError } = useCharacters();
+// Receives house from the route instead of global store; passes houseSlug to character card to builddetail links
+export const CharactersGrid = ({
+  filter = "all",
+  house,
+  houseSlug,
+}: {
+  filter: CharacterFilterType;
+  house: HouseType | null;
+  houseSlug: HouseSlug;
+}) => {
+  const { characters, isLoading, isError } = useCharacters(house);
   const favoriteCharacterIds = useAppStore((state) => state.favoriteCharacterIds);
 
   const filteredCharacters = filterCharactersByTab(characters, filter, favoriteCharacterIds);
@@ -59,6 +69,7 @@ export const CharactersGrid = ({ filter = "all" }: { filter: CharacterFilterType
         <CharacterCard
           key={character.id}
           character={character}
+          houseSlug={houseSlug}
           wrapperClassName="transition-transform duration-300 hover:scale-105 hover:shadow-xl"
         />
       ))}

@@ -1,14 +1,14 @@
 import { useQuery } from "@tanstack/react-query";
 import { fetchCharacters } from "@lib/api/characters";
-import { useAppStore } from "@lib/hooks/useAppStore";
 import { Character } from "@lib/constants/characters";
 
-export const useCharacters = () => {
-  const { preferredHouse } = useAppStore();
+import { HouseType } from "@lib/constants/houses";
+
+export const useCharacters = (house: HouseType | null) => {
   const { data, ...rest } = useQuery<Character[]>({
-    // Add preferredHouse so cache is keyed by house, same queryKey would reuse stale data after switching houses
-    queryKey: ["characters", preferredHouse],
-    queryFn: () => fetchCharacters(preferredHouse),
+    // Key by house so cache does not reuse data after switching houses
+    queryKey: ["characters", house],
+    queryFn: () => fetchCharacters(house),
     staleTime: Infinity,
   });
 

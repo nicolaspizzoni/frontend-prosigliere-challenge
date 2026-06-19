@@ -1,10 +1,10 @@
 import { createFileRoute, isNotFound, notFound, useLoaderData } from "@tanstack/react-router";
 import { fetchCharacter } from "@lib/api/characters";
-import { CharacterDetailView } from "../-components/CharacterDetailView";
-import { CharacterLoadError, CharacterNotFound } from "../-components/CharacterDetailStatus";
+import { CharacterDetailView } from "../../(characters)/-components/CharacterDetailView";
+import { CharacterLoadError, CharacterNotFound } from "../../(characters)/-components/CharacterDetailStatus";
 import { Character } from "@lib/constants/characters";
 
-export const Route = createFileRoute("/(characters)/character/$characterId")({
+export const Route = createFileRoute("/$house/character/$characterId")({
   loader: async ({ context: { queryClient }, params: { characterId } }) => {
     try {
       const character = await queryClient.ensureQueryData({
@@ -27,7 +27,7 @@ export const Route = createFileRoute("/(characters)/character/$characterId")({
 
 function RouteCharacterDetailView() {
   const characterData: Character = useLoaderData({
-    from: "/(characters)/character/$characterId",
+    from: "/$house/character/$characterId",
   });
   return <CharacterDetailView character={characterData} />;
 }
