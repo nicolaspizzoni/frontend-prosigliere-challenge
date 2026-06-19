@@ -1,4 +1,5 @@
 import {
+  formatAlternateActors,
   formatAlternateNames,
   formatAvailableDate,
   formatBoolean,
@@ -37,6 +38,17 @@ describe("formatAlternateNames", () => {
   it("returns Unknown for empty arrays", () => {
     expect(formatAlternateNames([])).toBe("Unknown");
     expect(formatAlternateNames(undefined)).toBe("Unknown");
+  });
+});
+
+describe("formatAlternateActors", () => {
+  it("joins actor names with commas", () => {
+    expect(formatAlternateActors(["Actor One", "Actor Two"])).toBe("Actor One, Actor Two");
+  });
+
+  it("returns Unknown for empty arrays", () => {
+    expect(formatAlternateActors([])).toBe("Unknown");
+    expect(formatAlternateActors(undefined)).toBe("Unknown");
   });
 });
 

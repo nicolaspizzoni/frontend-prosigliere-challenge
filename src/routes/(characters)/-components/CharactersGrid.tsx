@@ -30,7 +30,13 @@ export const CharactersGrid = ({
 
   if (isLoading) {
     return (
-      <div className="flex justify-center py-20">
+      // role="status" + aria-live="polite" announces loading without stealing focus
+      <div
+        role="status"
+        aria-live="polite"
+        aria-busy={isLoading}
+        className="flex justify-center py-20"
+      >
         <Spinner />
       </div>
     );
@@ -38,7 +44,12 @@ export const CharactersGrid = ({
 
   if (isError) {
     return (
-      <div className="flex flex-col items-center gap-4 py-20 text-center">
+      // role="alert" + aria-live="assertive" for errors that need immediate attention
+      <div
+        role="alert"
+        aria-live="assertive"
+        className="flex flex-col items-center gap-4 py-20 text-center"
+      >
         <p className="text-lg text-amber-200/60">Something went wrong while fetching characters.</p>
         <p className="text-sm text-amber-200/30">Please try again later.</p>
       </div>

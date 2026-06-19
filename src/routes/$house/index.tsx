@@ -31,7 +31,14 @@ function HouseCharactersView() {
   return (
     <div className="flex flex-col items-center gap-8">
       <TabBar value={filter} onChange={setFilter} />
-      <CharactersGrid filter={filter} house={apiHouse} houseSlug={house} />
+      {/* Tab panel linked to the active tab via aria-labelledby */}
+      <div
+        role="tabpanel"
+        id="character-grid-panel"
+        aria-labelledby={`tab-${filter}`}
+      >
+        <CharactersGrid filter={filter} house={apiHouse} houseSlug={house} />
+      </div>
     </div>
   );
 }
