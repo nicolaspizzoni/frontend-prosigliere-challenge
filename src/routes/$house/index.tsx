@@ -29,7 +29,7 @@ function HouseCharactersView() {
   };
 
   return (
-    <div className="flex flex-col items-center gap-8">
+    <div className="flex flex-col items-center gap-8 max-sm:px-4">
       <TabBar value={filter} onChange={setFilter} />
       {/* Tab panel linked to the active tab via aria-labelledby */}
       <div
