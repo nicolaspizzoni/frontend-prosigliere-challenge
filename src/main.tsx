@@ -23,7 +23,10 @@ const router = createRouter({
   },
   defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
   defaultPendingComponent: () => (
-    <div className={`p-2 text-2xl`}>
+    /**
+     * Center the spinner in the page
+     */
+    <div className={`flex justify-center py-20`}>
       <Spinner />
     </div>
   ),

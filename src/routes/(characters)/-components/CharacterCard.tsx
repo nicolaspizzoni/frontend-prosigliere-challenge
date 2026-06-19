@@ -35,6 +35,8 @@ export const CharacterCard = ({
       <img
         src={character.image || undefined}
         alt={character.name}
+        // Detail page card keeps default eager loading for LCP
+        loading={linkToDetail ? "lazy" : undefined}
         className="absolute inset-0 h-full w-full object-cover"
       />
       <div className="absolute inset-0 bg-linear-to-t from-gray-950 via-stone-900/20"></div>
