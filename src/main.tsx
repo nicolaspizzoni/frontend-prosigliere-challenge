@@ -4,8 +4,14 @@ import { ErrorComponent, RouterProvider, createRouter } from "@tanstack/react-ro
 import { routeTree } from "./routeTree.gen";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Spinner } from "./lib/components/Spinner";
+import { StrictMode } from "react";
 
-const queryClient = new QueryClient();
+// Retry once on failure, refetch on window focus is not needed as we're using infinite stale time
+const queryClient = new QueryClient({
+  defaultOptions: {
+    queries: { retry: 1, refetchOnWindowFocus: false },
+  },
+});
 
 const router = createRouter({
   routeTree,
@@ -17,7 +23,10 @@ const router = createRouter({
   },
   defaultErrorComponent: ({ error }) => <ErrorComponent error={error} />,
   defaultPendingComponent: () => (
-    <div className={`p-2 text-2xl`}>
+    /**
+     * Center the spinner in the page
+     */
+    <div className={`flex justify-center py-20`}>
       <Spinner />
     </div>
   ),
@@ -34,8 +43,10 @@ const rootElement = document.getElementById("app")!;
 if (!rootElement.innerHTML) {
   const root = ReactDOM.createRoot(rootElement);
   root.render(
-    <QueryClientProvider client={queryClient}>
-      <RouterProvider router={router} />
-    </QueryClientProvider>
+    <StrictMode>
+      <QueryClientProvider client={queryClient}>
+        <RouterProvider router={router} />
+      </QueryClientProvider>
+    </StrictMode>
   );
 }

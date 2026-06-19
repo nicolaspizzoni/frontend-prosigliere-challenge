@@ -1,4 +1,18 @@
-import { ErrorComponentProps, Link, useRouter } from "@tanstack/react-router";
+import { ErrorComponentProps, Link, useParams, useRouter } from "@tanstack/react-router";
+
+const BackToCharactersLink = () => {
+  const { house } = useParams({ from: "/$house/character/$characterId" });
+  return (
+    <Link
+      to="/$house"
+      params={{ house }}
+      search={true}
+      className="text-sm font-medium text-amber-200 underline-offset-4 hover:text-amber-100 hover:underline"
+    >
+      Back to characters
+    </Link>
+  );
+};
 
 export const CharacterNotFound = () => (
   <div className="container mx-auto flex flex-col items-center gap-4 px-4 py-20 text-center">
@@ -6,12 +20,9 @@ export const CharacterNotFound = () => (
     <p className="text-sm text-amber-200/30">
       The character you are looking for does not exist or may have been removed.
     </p>
-    <Link
-      to="/"
-      className="mt-2 text-sm font-medium text-amber-200 underline-offset-4 hover:text-amber-100 hover:underline"
-    >
-      Back to characters
-    </Link>
+    <div className="mt-2">
+      <BackToCharactersLink />
+    </div>
   </div>
 );
 
@@ -25,7 +36,9 @@ export const CharacterLoadError = ({ error, reset }: ErrorComponentProps) => {
 
   return (
     <div className="container mx-auto flex flex-col items-center gap-4 px-4 py-20 text-center">
-      <p className="text-lg text-amber-200/60">Something went wrong while loading this character.</p>
+      <p className="text-lg text-amber-200/60">
+        Something went wrong while loading this character.
+      </p>
       <p className="text-sm text-amber-200/30">
         {error instanceof Error ? error.message : "Please try again later."}
       </p>
@@ -37,12 +50,7 @@ export const CharacterLoadError = ({ error, reset }: ErrorComponentProps) => {
         >
           Try again
         </button>
-        <Link
-          to="/"
-          className="text-sm font-medium text-amber-200 underline-offset-4 hover:text-amber-100 hover:underline"
-        >
-          Back to characters
-        </Link>
+        <BackToCharactersLink />
       </div>
     </div>
   );
