@@ -42,7 +42,7 @@ export const TabBar = ({ value, onChange }: TabBarProps) => {
       id="character-filter-tabs"
       aria-label="Character filters"
       onKeyDown={handleKeyDown}
-      className="flex justify-center rounded-xl bg-amber-900/15 p-1"
+      className="grid max-w-full grid-cols-2 gap-1 rounded-xl bg-amber-900/15 p-1 max-sm:w-full sm:flex sm:flex-nowrap sm:justify-center"
     >
       {characterTabs.map((tab) => (
         <Button
@@ -55,7 +55,7 @@ export const TabBar = ({ value, onChange }: TabBarProps) => {
           // Roving tabindex: only the active tab stays in the tab order
           tabIndex={value === tab.id ? 0 : -1}
           aria-controls="character-grid-panel"
-          className="px-4 font-mono"
+          className="px-2 font-mono max-sm:w-full max-sm:justify-center sm:px-4"
         >
           {tab.label}
         </Button>

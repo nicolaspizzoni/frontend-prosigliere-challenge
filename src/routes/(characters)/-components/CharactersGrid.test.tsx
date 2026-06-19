@@ -1,5 +1,4 @@
 import { screen } from "@testing-library/react";
-import userEvent from "@testing-library/user-event";
 import { useAppStore } from "@lib/hooks/useAppStore";
 import { mockCharacters } from "../../../test/mocks";
 import { renderWithProviders } from "../../../test/utils";
