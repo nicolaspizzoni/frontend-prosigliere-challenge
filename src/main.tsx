@@ -16,7 +16,8 @@ const queryClient = new QueryClient({
 const router = createRouter({
   routeTree,
   defaultPreload: "intent",
-  defaultPreloadStaleTime: 0,
+  //Keep preloaded route data valid indefinitely
+  defaultPreloadStaleTime: Infinity,
   scrollRestoration: true,
   context: {
     queryClient,

@@ -1,7 +1,10 @@
 import { createFileRoute, isNotFound, notFound, useLoaderData } from "@tanstack/react-router";
 import { fetchCharacter } from "@lib/api/characters";
 import { CharacterDetailView } from "../../(characters)/-components/CharacterDetailView";
-import { CharacterLoadError, CharacterNotFound } from "../../(characters)/-components/CharacterDetailStatus";
+import {
+  CharacterLoadError,
+  CharacterNotFound,
+} from "../../(characters)/-components/CharacterDetailStatus";
 import { Character } from "@lib/constants/characters";
 
 export const Route = createFileRoute("/$house/character/$characterId")({
@@ -11,6 +14,8 @@ export const Route = createFileRoute("/$house/character/$characterId")({
         queryKey: ["characters", characterId],
         queryFn: () => fetchCharacter(characterId),
         retry: false,
+        // Character data is static, cache permanently after first load
+        staleTime: Infinity,
       });
       if (!character) throw notFound();
       return character;
